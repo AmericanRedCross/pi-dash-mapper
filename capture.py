@@ -18,18 +18,14 @@ gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
 while True:
     report = gpsd.next()
     if report['class'] == 'TPV':
-        #latitude = getattr(nx, 'lat', "Unknown")
-        #longitude = getattr(nx, 'lon', "Unknown")
-        #print(str(latitude)+"Long:"+str(longitude))
-        # Set orientation to normal landscape.
+        # 1. Set orientation to normal landscape.
         camera.exif_tags['IFD0.Orientation'] = '1'
 
-        # Set picture date and time to GPS values.
+        # 2. Set picture date and time to GPS values.
         #now = parser.parse(report.get('time', datetime.isoformat()))
-        #print(now.strftime('%s'))
         camera.exif_tags['EXIF.DateTimeOriginal'] = "1"
 
-        # Set altitude to GPS value.
+        # 3. Set altitude to GPS value.
         alt = report.get('alt', 0.0)
         print(alt)
         camera.exif_tags['GPS.GP SAltitudeRef'] = '0' if alt > 0 else '1'
@@ -72,6 +68,10 @@ while True:
         
         camera.capture('image'+str(datetime.datetime.now())+'.jpeg')
     sleep(5)
+
+def isUSBStorageExist():
+    # TODO check if USB storage Available
+    return True;
 #while(True):
     #
     #sleep(5)
