@@ -29,8 +29,8 @@ Output:
 ```shell script
 ┌───────────────────────────────────────────┐┌─────────────────────────────────┐
 │    Time:       2020-06-08T05:26:30.000Z   ││PRN:   Elev:  Azim:  SNR:  Used: │
-│    Latitude:    36.34590016 N             ││  10    67    083    45      Y   │
-│    Longitude:   94.23875400 W             ││  11    22    293    26      Y   │
+│    Latitude:    xx.xxxxxxxx N             ││  10    67    083    45      Y   │
+│    Longitude:   xx.xxxxxxxx W             ││  11    22    293    26      Y   │
 │    Altitude:   1296.916 ft                ││  14    57    279    28      Y   │
 │    Speed:      0.02 mph                   ││  20    36    118    31      Y   │
 │    Heading:    0.0 deg (true)             ││  21    21    176    34      Y   │
