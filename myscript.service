@@ -1,0 +1,10 @@
+[Unit]
+Description=My Script Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/bin/sh /var/www/html/scripts/run.sh
+
+[Install]
+WantedBy=multi-user.target
