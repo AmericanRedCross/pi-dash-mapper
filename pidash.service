@@ -1,0 +1,13 @@
+[Unit]
+Description=PI Script Service
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/pi-dash-mapper/capture.py
+User=pi
+WorkingDirectory=/home/pi/pi-dash-mapper
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

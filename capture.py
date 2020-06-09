@@ -1,4 +1,4 @@
-
+#!/usr/bin/python3
 
 from picamera import PiCamera
 from time import *
@@ -7,6 +7,9 @@ from gps import *
 import math
 import datetime
 from dateutil import parser
+
+import sys
+print(sys.path)
 
 
 camera = PiCamera()

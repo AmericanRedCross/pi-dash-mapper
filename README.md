@@ -53,5 +53,9 @@ Under Development .......
 Readme pending .....
 
 Test ...
+ sudo cp pi-dash-script.service /lib/systemd/system/
+sudo chmod 644 /lib/systemd/system/pi-dash-script.service
+sudo systemctl daemon-reload
+sudo systemctl enable sample.service
 
-
+chmod +x capture.py 
