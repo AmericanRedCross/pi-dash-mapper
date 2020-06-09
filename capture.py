@@ -7,9 +7,10 @@ from gps import *
 import math
 import datetime
 from dateutil import parser
+from detect_usb import get_mount_points
 
-import sys
-print(sys.path)
+
+print(get_mount_points()[0][1])
 
 
 camera = PiCamera()
@@ -69,7 +70,7 @@ while True:
         slon = int(6000 * (60 * (alon - dlon) - mlon))
         camera.exif_tags['GPS.GPSLongitude'] = '%d/1,%d/1,%d/100' % (dlon, mlon, slon)
         
-        camera.capture('image'+str(datetime.datetime.now())+'.jpeg')
+        camera.capture(get_mount_points()[0][1]+'/image-'+str(int(time.time()))+'.jpeg')
     sleep(5)
 
 def isUSBStorageExist():
