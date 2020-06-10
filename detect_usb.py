@@ -2,7 +2,7 @@
 
 import os
 from glob import glob
-from subprocess import check_output, CalledProcessError
+from subprocess import check_output
 
 def get_usb_devices():
     sdb_devices = map(os.path.realpath, glob('/sys/block/sd*'))

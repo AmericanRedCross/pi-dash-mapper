@@ -77,8 +77,7 @@ sudo service pidash start
 Now, Raspberry PI should start capturing the pictures. Service will be started when raspberry PI will boot up. Turning on the PI will be enough to get the pictures stored in your external(USB) flash drive.
 
 
-
-### Test
+### Sample Test Map
 
 ### Plot into map
 

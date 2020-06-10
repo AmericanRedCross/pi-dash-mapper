@@ -26,6 +26,7 @@ while True:
         camera.exif_tags['IFD0.Orientation'] = '1'
 
         # 2. Set picture date and time to GPS values.
+        # TODO Tag the date time based on the raspberry PI (Timezone)
         #now = parser.parse(report.get('time', datetime.isoformat()))
         camera.exif_tags['EXIF.DateTimeOriginal'] = "1"
 
