@@ -47,15 +47,41 @@ Output:
 ```
 
 ### Configure Python Service
+- Clone the project
+- Move/Copy `pidash.service` file into /lib/systemd/system/
+```shell script
+sudo cp pidash.service /lib/systemd/system/
+```
 
-Under Development .......
+File permission:
+```sbtshell
+sudo chmod 644 /lib/systemd/system/pidash.service
+```
 
-Readme pending .....
-
-Test ...
- sudo cp pi-dash-script.service /lib/systemd/system/
-sudo chmod 644 /lib/systemd/system/pi-dash-script.service
+Reload and Enable the Daemon:
+```sbtshell
 sudo systemctl daemon-reload
 sudo systemctl enable sample.service
+```
 
-chmod +x capture.py 
+File permission for python script:
+```sbtshell
+sudo chmod +x capture.py 
+```
+
+Start the service:
+```sbtshell
+sudo service pidash start
+```
+
+Now, Raspberry PI should start capturing the pictures. Service will be started when raspberry PI will boot up. Turning on the PI will be enough to get the pictures stored in your external(USB) flash drive.
+
+
+
+### Test
+
+### Plot into map
+
+### Web app and config
+Under development
+
