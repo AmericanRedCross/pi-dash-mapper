@@ -5,19 +5,19 @@ from time import *
 import datetime
 from gps import *
 import math
-import datetime
 from dateutil import parser
 from detect_usb import get_mount_points
-
-
-print(get_mount_points()[0][1])
+from pathlib import Path
 
 
 camera = PiCamera()
 gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
-#session = gps(**opts)
-#gpsd.stream(WATCH_ENABLE|WATCH_NEWSTYLE)
 
+def isUSBStorageExist():
+    if get_mount_points():
+        return get_mount_points()[0][1]
+    else:
+        return False
 
 while True:
     report = gpsd.next()
@@ -70,13 +70,11 @@ while True:
         mlon = int(60 * (alon - dlon))
         slon = int(6000 * (60 * (alon - dlon) - mlon))
         camera.exif_tags['GPS.GPSLongitude'] = '%d/1,%d/1,%d/100' % (dlon, mlon, slon)
-        
-        camera.capture(get_mount_points()[0][1]+'/image-'+str(int(time.time()))+'.jpeg')
-    sleep(5)
-
-def isUSBStorageExist():
-    # TODO check if USB storage Available
-    return True;
-#while(True):
-    #
-    #sleep(5)
+        directory = "pidash-"+str(datetime.date.today())
+        usbStorage = isUSBStorageExist()
+        if usbStorage:
+            Path(usbStorage+'/'+directory).mkdir(parents=True, exist_ok=True)
+            camera.capture(usbStorage+'/'+directory+'/image-'+str(int(time.time()))+'.jpeg')
+        else:
+            print("Please Insert USB Flash Drive")
+    sleep(2)
