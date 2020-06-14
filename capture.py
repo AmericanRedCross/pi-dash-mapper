@@ -73,6 +73,7 @@ while True:
         directory = "pidash-"+str(datetime.date.today())
         usbStorage = isUSBStorageExist()
         if usbStorage:
+            # TODO Check if distance or speed is noticeable to create new image
             Path(usbStorage+'/'+directory).mkdir(parents=True, exist_ok=True)
             camera.capture(usbStorage+'/'+directory+'/image-'+str(int(time.time()))+'.jpeg')
         else:
