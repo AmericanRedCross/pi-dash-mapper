@@ -8,16 +8,32 @@ import math
 from dateutil import parser
 from detect_usb import get_mount_points
 from pathlib import Path
+from geopy.distance import distance
 
 
 camera = PiCamera()
 gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
+previous_cordinate = ()
+accepted_distance = 1.5 # in meter
 
 def isUSBStorageExist():
     if get_mount_points():
         return get_mount_points()[0][1]
     else:
         return False
+
+
+def getDistance(prev_cord, cur_cord):
+    print(prev_cord, cur_cord)
+    if prev_cord:
+        # Calculate distance
+        return distance(prev_cord, cur_cord).m
+        #return 2 # return meter (double)
+    else:
+        return accepted_distance # Return offset value the we accept as significant distance
+        
+    
+
 
 while True:
     report = gpsd.next()
@@ -73,8 +89,14 @@ while True:
         directory = "pidash-"+str(datetime.date.today())
         usbStorage = isUSBStorageExist()
         if usbStorage:
-            Path(usbStorage+'/'+directory).mkdir(parents=True, exist_ok=True)
-            camera.capture(usbStorage+'/'+directory+'/image-'+str(int(time.time()))+'.jpeg')
+            dist = getDistance(previous_cordinate, (lat,lon))
+            print("Distance:"+str(dist))
+            
+            if(dist>=accepted_distance): # Assume returned value is in meter
+                Path(usbStorage+'/'+directory).mkdir(parents=True, exist_ok=True)
+                camera.capture(usbStorage+'/'+directory+'/image-'+str(int(time.time()))+'.jpeg')
+                previous_cordinate = (lat,lon)
+                print("Image Created:"+str(int(time.time()))+'.jpeg')
         else:
             print("Please Insert USB Flash Drive")
-    sleep(2)
+    sleep(1)
