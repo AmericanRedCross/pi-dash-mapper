@@ -12,12 +12,25 @@ from pathlib import Path
 
 camera = PiCamera()
 gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
+previous_cordinate = ()
 
 def isUSBStorageExist():
     if get_mount_points():
         return get_mount_points()[0][1]
     else:
         return False
+
+
+def getDistance(prev_cord, cur_cord):
+    print(prev_cord, cur_cord)
+    if prev_cord:
+        # Calculate distance
+        return 10 # return meter (double)
+    else:
+        return 10 # Return offset value the we accept as significant distance
+    
+    
+
 
 while True:
     report = gpsd.next()
@@ -74,8 +87,14 @@ while True:
         usbStorage = isUSBStorageExist()
         if usbStorage:
             # TODO Check if distance or speed is noticeable to create new image
-            Path(usbStorage+'/'+directory).mkdir(parents=True, exist_ok=True)
-            camera.capture(usbStorage+'/'+directory+'/image-'+str(int(time.time()))+'.jpeg')
+            # TODO Distance from previous image to new image is >= 1 meters
+            distance = getDistance(previous_cordinate, (lat,lon))
+            print("Distance:"+str(distance))
+            
+            if(distance>=5): # Assume returned value is in meter
+                Path(usbStorage+'/'+directory).mkdir(parents=True, exist_ok=True)
+                camera.capture(usbStorage+'/'+directory+'/image-'+str(int(time.time()))+'.jpeg')
+                previous_cordinate = (lat,lon)
         else:
             print("Please Insert USB Flash Drive")
-    sleep(2)
+    sleep(1)
