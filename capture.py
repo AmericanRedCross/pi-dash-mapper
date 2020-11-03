@@ -99,4 +99,4 @@ while True:
                 print("Image Created:"+str(int(time.time()))+'.jpeg')
         else:
             print("Please Insert USB Flash Drive")
-    sleep(1)
+    #sleep(1) # we dont need
